@@ -260,8 +260,10 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
   }
 #endif
 
+#if !defined(__NuttX__)
   if (type == MessageLoop::TYPE_IO)
     return std::unique_ptr<MessagePump>(new MessagePumpForIO());
+#endif
 
 #if defined(OS_ANDROID) && 0
   if (type == MessageLoop::TYPE_JAVA)

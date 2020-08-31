@@ -139,7 +139,7 @@ PlatformThreadId PlatformThread::CurrentId() {
 #if defined(OS_MACOSX)
   return pthread_mach_thread_np(pthread_self());
 #elif defined(OS_LINUX)
-  return syscall(__NR_gettid);
+  return gettid();
 #elif defined(OS_ANDROID)
   return gettid();
 #elif defined(OS_FUCHSIA)

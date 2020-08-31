@@ -712,11 +712,13 @@ ThreadActivityTracker::ThreadActivityTracker(void* base, size_t size)
       sizeof(header_->thread_ref) == sizeof(header_->thread_ref.as_id),
       "PlatformThreadHandle::Handle is too big to hold in 64-bit ID");
 
+#if defined(_LP64)
   // Ensure that the alignment of Activity.data is properly aligned to a
   // 64-bit boundary so there are no interoperability-issues across cpu
   // architectures.
   static_assert(offsetof(Activity, data) % sizeof(uint64_t) == 0,
                 "ActivityData.data is not 64-bit aligned");
+#endif
 
   // Provided memory should either be completely initialized or all zeros.
   if (header_->owner.data_id.load(std::memory_order_relaxed) == 0) {

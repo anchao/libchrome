@@ -68,7 +68,7 @@ namespace base {
 
 namespace {
 
-#if defined(OS_BSD) || defined(OS_MACOSX) || defined(OS_NACL) || \
+#if defined(OS_BSD) || defined(OS_MACOSX) || defined(OS_NACL) || defined(__NuttX__) || \
   defined(OS_FUCHSIA) || (defined(OS_ANDROID) && __ANDROID_API__ < 21)
 int CallStat(const char* path, stat_wrapper_t* sb) {
   AssertBlockingAllowed();

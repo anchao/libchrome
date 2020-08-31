@@ -46,7 +46,7 @@ pid_t ProcDirSlotToPid(const char* d_name) {
     return 0;
 
   // Read the process's command line.
-  pid_t pid;
+  int pid;
   std::string pid_string(d_name);
   if (!StringToInt(pid_string, &pid)) {
     NOTREACHED();

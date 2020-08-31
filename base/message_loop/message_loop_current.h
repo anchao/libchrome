@@ -262,7 +262,7 @@ class BASE_EXPORT MessageLoopCurrentForIO : public MessageLoopCurrent {
   HRESULT RegisterIOHandler(HANDLE file, MessagePumpForIO::IOHandler* handler);
   bool RegisterJobObject(HANDLE job, MessagePumpForIO::IOHandler* handler);
   bool WaitForIOCompletion(DWORD timeout, MessagePumpForIO::IOHandler* filter);
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
+#elif (defined(OS_POSIX) || defined(OS_FUCHSIA)) && !defined(__NuttX__)
   // Please see WatchableIOMessagePumpPosix for definition.
   // Prefer base::FileDescriptorWatcher for non-critical IO.
   bool WatchFileDescriptor(int fd,

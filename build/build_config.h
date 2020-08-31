@@ -36,6 +36,7 @@
 
 #define OS_ANDROID 1
 
+#elif defined(__NuttX__)  // NuttX
 #elif !defined(__ANDROID_HOST__)  // Chrome OS
 
 #define OS_CHROMEOS 1
@@ -93,6 +94,8 @@
 #define OS_AIX 1
 #elif defined(__asmjs__)
 #define OS_ASMJS
+#elif defined(__NuttX__)
+#define OS_LINUX 1
 #else
 #error Please add support for your platform in build/build_config.h
 #endif

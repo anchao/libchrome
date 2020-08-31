@@ -23,6 +23,13 @@
 #include "base/template_util.h"
 #include "build/build_config.h"
 
+#undef LOG_VERBOSE
+#undef LOG_INFO
+#undef LOG_WARNING
+#undef LOG_ERROR
+#undef LOG_FATAL
+#undef LOG_NUM_SEVERITIES
+
 //
 // Optional message capabilities
 // -----------------------------
@@ -389,6 +396,7 @@ const LogSeverity LOG_DFATAL = LOG_FATAL;
 const LogSeverity LOG_0 = LOG_ERROR;
 #endif
 
+#if !defined(CONFIG_CHROMIUM_LOG_LEVEL)
 // As special cases, we can assume that LOG_IS_ON(FATAL) always holds. Also,
 // LOG_IS_ON(DFATAL) always holds in debug mode. In particular, CHECK()s will
 // always fire if they fail.
@@ -401,6 +409,10 @@ const LogSeverity LOG_0 = LOG_ERROR;
 // may be slow.
 #define VLOG_IS_ON(verboselevel) \
   ((verboselevel) <= ::logging::GetVlogLevel(__FILE__))
+#else
+#define LOG_IS_ON(severity) (::logging::LOG_##severity >= CONFIG_CHROMIUM_LOG_LEVEL)
+#define VLOG_IS_ON(severity) (severity >= CONFIG_CHROMIUM_LOG_LEVEL)
+#endif
 
 // Helper macro which avoids evaluating the arguments to a stream if
 // the condition doesn't hold. Condition is evaluated once and only once.
