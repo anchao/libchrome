@@ -61,8 +61,10 @@ class FileDescriptorWatcher::Controller::Watcher
   // MessageLoopCurrent::DestructionObserver:
   void WillDestroyCurrentMessageLoop() override;
 
+#if !defined(__NuttX__)
   // The MessageLoopForIO's watch handle (stops the watch when destroyed).
   MessagePumpForIO::FdWatchController fd_watch_controller_;
+#endif
 
   // Runs tasks on the sequence on which this was instantiated (i.e. the
   // sequence on which the callback must run).
@@ -94,8 +96,10 @@ FileDescriptorWatcher::Controller::Watcher::Watcher(
     WeakPtr<Controller> controller,
     MessagePumpForIO::Mode mode,
     int fd)
-    : fd_watch_controller_(FROM_HERE),
-      controller_(controller),
+    : controller_(controller),
+#if !defined(__NuttX__)
+      fd_watch_controller_(FROM_HERE),
+#endif
       mode_(mode),
       fd_(fd) {
   DCHECK(callback_task_runner_);
@@ -110,6 +114,7 @@ FileDescriptorWatcher::Controller::Watcher::~Watcher() {
 void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+#if !defined(__NuttX__)
   if (!MessageLoopCurrentForIO::Get()->WatchFileDescriptor(
           fd_, false, mode_, &fd_watch_controller_, this)) {
     // TODO(wez): Ideally we would [D]CHECK here, or propagate the failure back
@@ -117,6 +122,7 @@ void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
     // closed |fd_| on another thread, so the best we can do is Debug-log.
     DLOG(ERROR) << "Failed to watch fd=" << fd_;
   }
+#endif
 
   if (!registered_as_destruction_observer_) {
     MessageLoopCurrentForIO::Get()->AddDestructionObserver(this);

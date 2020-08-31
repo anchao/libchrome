@@ -31,7 +31,8 @@ static_assert(File::FROM_BEGIN == SEEK_SET && File::FROM_CURRENT == SEEK_CUR &&
 namespace {
 
 #if defined(OS_BSD) || defined(OS_MACOSX) || defined(OS_NACL) || \
-  defined(OS_FUCHSIA) || (defined(OS_ANDROID) && __ANDROID_API__ < 21)
+  defined(OS_FUCHSIA) || (defined(OS_ANDROID) && __ANDROID_API__ < 21) || \
+  defined(__NuttX__)
 int CallFstat(int fd, stat_wrapper_t *sb) {
   AssertBlockingAllowed();
   return fstat(fd, sb);
@@ -191,12 +192,12 @@ int64_t File::Seek(Whence whence, int64_t offset) {
 
 // Additionally check __BIONIC__ since older versions of Android don't define
 // _FILE_OFFSET_BITS.
-#if _FILE_OFFSET_BITS != 64 || defined(__BIONIC__)
+#if (_FILE_OFFSET_BITS != 64 || defined(__BIONIC__)) && !defined(__NuttX__)
   static_assert(sizeof(int64_t) == sizeof(off64_t), "off64_t must be 64 bits");
   return lseek64(file_.get(), static_cast<off64_t>(offset),
                  static_cast<int>(whence));
 #else
-  static_assert(sizeof(int64_t) == sizeof(off_t), "off_t must be 64 bits");
+  static_assert(sizeof(int64_t) == sizeof(off64_t), "off_t must be 64 bits");
   return lseek(file_.get(), static_cast<off_t>(offset),
                static_cast<int>(whence));
 #endif
@@ -277,7 +278,7 @@ int File::Write(int64_t offset, const char* data, int size) {
   int bytes_written = 0;
   int rv;
   do {
-#if _FILE_OFFSET_BITS != 64 || defined(__BIONIC__)
+#if (_FILE_OFFSET_BITS != 64 || defined(__BIONIC__)) && !defined(__NuttX__)
     // In case __USE_FILE_OFFSET64 is not used, we need to call pwrite64()
     // instead of pwrite().
     static_assert(sizeof(int64_t) == sizeof(off64_t),
@@ -489,7 +490,9 @@ void File::DoInitialize(const FilePath& path, uint32_t flags) {
   else if (flags & FLAG_APPEND)
     open_flags |= O_APPEND | O_WRONLY;
 
+#if !defined(__NuttX__)
   static_assert(O_RDONLY == 0, "O_RDONLY must equal zero");
+#endif
 
   int mode = S_IRUSR | S_IWUSR;
 #if defined(OS_CHROMEOS)

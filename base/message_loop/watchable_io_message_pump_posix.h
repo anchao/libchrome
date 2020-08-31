@@ -25,7 +25,7 @@ class WatchableIOMessagePumpPosix {
 
   class FdWatchControllerInterface {
    public:
-    explicit FdWatchControllerInterface(const Location& from_here);
+    FdWatchControllerInterface(void);
     // Subclasses must call StopWatchingFileDescriptor() in their destructor
     // (this parent class cannot generically do it for them as it must usually
     // be invoked before they destroy their state which happens before the

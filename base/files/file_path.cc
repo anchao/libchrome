@@ -5,6 +5,7 @@
 #include "base/files/file_path.h"
 
 #include <string.h>
+#include <strings.h>
 #include <algorithm>
 
 #include "base/logging.h"

@@ -124,6 +124,7 @@ bool MemoryMappedFile::MapFileRegionToMemory(
         do_manual_extension = true;
       }
 #else
+#if !defined(__NuttX__)
       if (posix_fallocate(file_.GetPlatformFile(), region.offset,
                           region.size) != 0) {
         DPLOG(ERROR) << "posix_fallocate";
@@ -131,6 +132,7 @@ bool MemoryMappedFile::MapFileRegionToMemory(
         // give up just yet. Try the manual method below.
         do_manual_extension = true;
       }
+#endif
 #endif
 
       // Manually realize the extended file by writing bytes to it at intervals.

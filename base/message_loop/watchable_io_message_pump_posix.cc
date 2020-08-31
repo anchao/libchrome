@@ -7,8 +7,7 @@
 namespace base {
 
 WatchableIOMessagePumpPosix::FdWatchControllerInterface::
-    FdWatchControllerInterface(const Location& from_here)
-    : created_from_location_(from_here) {}
+    FdWatchControllerInterface() {}
 
 WatchableIOMessagePumpPosix::FdWatchControllerInterface::
     ~FdWatchControllerInterface() = default;

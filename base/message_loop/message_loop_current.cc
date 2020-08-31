@@ -217,7 +217,7 @@ bool MessageLoopCurrentForIO::WaitForIOCompletion(
   DCHECK_CALLED_ON_VALID_THREAD(current_->bound_thread_checker_);
   return pump_->WaitForIOCompletion(timeout, filter);
 }
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
+#elif (defined(OS_POSIX) || defined(OS_FUCHSIA)) && !defined(__NuttX__)
 bool MessageLoopCurrentForIO::WatchFileDescriptor(
     int fd,
     bool persistent,

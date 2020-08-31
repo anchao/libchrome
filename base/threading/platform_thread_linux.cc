@@ -133,8 +133,10 @@ void PlatformThread::SetName(const std::string& name) {
   // the process name for the LWP.  We don't want to do this for the main
   // thread because that would rename the process, causing tools like killall
   // to stop working.
+#if !defined(__NuttX__)
   if (PlatformThread::CurrentId() == getpid())
     return;
+#endif
 
   // http://0pointer.de/blog/projects/name-your-threads.html
   // Set the name for the LWP (which gets truncated to 15 characters).
