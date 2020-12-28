@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+menu "Middle Ware: Chromium general utility library"
+
 config LIB_CHROMIUM
   bool "The Chromium general utility library"
   default n
@@ -33,3 +35,4 @@ config CHROMIUM_LOG_LEVEL
     Sets log level for the Chromium Base library.
 
 endif
+endmenu
