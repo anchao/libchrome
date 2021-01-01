@@ -485,11 +485,11 @@ bool Histogram::HasConstructionArguments(Sample expected_minimum,
           expected_maximum == declared_max());
 }
 
-void Histogram::Add(int value) {
+void Histogram::Add(int32_t value) {
   AddCount(value, 1);
 }
 
-void Histogram::AddCount(int value, int count) {
+void Histogram::AddCount(int32_t value, int count) {
   DCHECK_EQ(0, ranges(0));
   DCHECK_EQ(kSampleType_MAX, ranges(bucket_count()));
 
@@ -1196,7 +1196,7 @@ class CustomHistogram::Factory : public Histogram::Factory {
  protected:
   BucketRanges* CreateRanges() override {
     // Remove the duplicates in the custom ranges array.
-    std::vector<int> ranges = *custom_ranges_;
+    std::vector<int32_t> ranges = *custom_ranges_;
     ranges.push_back(0);  // Ensure we have a zero value.
     ranges.push_back(HistogramBase::kSampleType_MAX);
     std::sort(ranges.begin(), ranges.end());
