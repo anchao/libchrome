@@ -281,10 +281,10 @@ void SparseHistogram::WriteAsciiImpl(bool graph_it,
 
 void SparseHistogram::WriteAsciiHeader(const Count total_count,
                                        std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
+  StringAppendF(output, "Histogram: %s recorded %" PRId32" samples", histogram_name(),
                 total_count);
   if (flags())
-    StringAppendF(output, " (flags = 0x%x)", flags());
+    StringAppendF(output, " (flags = 0x%" PRIx32")", flags());
 }
 
 }  // namespace base

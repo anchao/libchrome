@@ -755,7 +755,7 @@ double Histogram::GetPeakBucketSize(const SampleVectorBase& samples) const {
 void Histogram::WriteAsciiHeader(const SampleVectorBase& samples,
                                  Count sample_count,
                                  std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
+  StringAppendF(output, "Histogram: %s recorded %" PRId32" samples", histogram_name(),
                 sample_count);
   if (sample_count == 0) {
     DCHECK_EQ(samples.sum(), 0);
@@ -764,7 +764,7 @@ void Histogram::WriteAsciiHeader(const SampleVectorBase& samples,
     StringAppendF(output, ", mean = %.1f", mean);
   }
   if (flags())
-    StringAppendF(output, " (flags = 0x%x)", flags());
+    StringAppendF(output, " (flags = 0x%" PRIx32")", flags());
 }
 
 void Histogram::WriteAsciiBucketContext(const int64_t past,

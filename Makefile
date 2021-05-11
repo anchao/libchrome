@@ -180,7 +180,7 @@ CXXSRCS += nuttx/base/message_loop/message_pump_libevent.cc
 CXXSRCS += nuttx/base/sys_info_posix.cc
 
 CXXFLAGS += -DOS_POSIX -D_POSIX_MONOTONIC_CLOCK=1 -DNDEBUG
-CXXFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-value
+CXXFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-value -Wno-sign-compare
 CXXFLAGS += -D_GNU_SOURCE -fpermissive -fno-exceptions
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nuttx}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}

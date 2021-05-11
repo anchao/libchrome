@@ -21,7 +21,7 @@ namespace base {
 namespace {
 
 // Format string for printing a \uXXXX escape sequence.
-const char kU16EscapeFormat[] = "\\u%04X";
+const char kU16EscapeFormat[] = "\\u%04" PRIx32;
 
 // The code point to output for an invalid input code unit.
 const uint32_t kReplacementCodePoint = 0xFFFD;

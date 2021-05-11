@@ -190,13 +190,13 @@ void HistogramBase::WriteAsciiBucketGraph(double current_size,
 
 const std::string HistogramBase::GetSimpleAsciiBucketRange(
     Sample sample) const {
-  return StringPrintf("%d", sample);
+  return StringPrintf("%" PRId32, sample);
 }
 
 void HistogramBase::WriteAsciiBucketValue(Count current,
                                           double scaled_sum,
                                           std::string* output) const {
-  StringAppendF(output, " (%d = %3.1f%%)", current, current/scaled_sum);
+  StringAppendF(output, " (%" PRId32" = %3.1f%%)", current, current/scaled_sum);
 }
 
 // static
