@@ -205,10 +205,7 @@ void CommandLine::InitUsingArgvForTesting(int argc, const char* const* argv) {
 // static
 bool CommandLine::Init(int argc, const char* const* argv) {
   if (current_process_commandline_) {
-    // If this is intentional, Reset() must be called first. If we are using
-    // the shared build mode, we have to share a single object across multiple
-    // shared libraries.
-    return false;
+    Reset();
   }
 
   current_process_commandline_ = new CommandLine(NO_PROGRAM);

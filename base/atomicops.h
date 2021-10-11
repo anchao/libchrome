@@ -59,14 +59,14 @@ typedef int32_t Atomic32;
 // NaCl's intptr_t is not actually 64-bits on 64-bit!
 // http://code.google.com/p/nativeclient/issues/detail?id=1162
 typedef int64_t Atomic64;
+typedef int32_t AtomicWord;
 #else
 typedef intptr_t Atomic64;
-#endif
-#endif
-
-// Use AtomicWord for a machine-sized pointer.  It will use the Atomic32 or
-// Atomic64 routines below, depending on your architecture.
 typedef intptr_t AtomicWord;
+#endif
+#else
+typedef int32_t AtomicWord;
+#endif
 
 // Atomically execute:
 //      result = *ptr;

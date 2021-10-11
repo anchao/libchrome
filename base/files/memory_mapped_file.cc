@@ -95,8 +95,9 @@ bool MemoryMappedFile::Initialize(File file,
   if (IsValid())
     return false;
 
-  if (region != Region::kWholeFile)
+  if (region != Region::kWholeFile) {
     DCHECK_GE(region.offset, 0);
+  }
 
   file_ = std::move(file);
 

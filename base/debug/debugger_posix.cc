@@ -22,10 +22,6 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 
-#if defined(__GLIBCXX__)
-#include <cxxabi.h>
-#endif
-
 #if defined(OS_MACOSX)
 #include <AvailabilityMacros.h>
 #endif

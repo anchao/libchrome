@@ -109,7 +109,7 @@ void* const kUninitialized = nullptr;
 void* const kDestroyed = reinterpret_cast<void*>(1);
 
 // The maximum number of slots in our thread local storage stack.
-constexpr int kThreadLocalStorageSize = 256;
+constexpr int kThreadLocalStorageSize = 8;
 
 enum TlsStatus {
   FREE,
