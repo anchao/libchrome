@@ -7,7 +7,7 @@
 
 namespace base {
 
-  bool SharedMemory::MapAt(int, unsigned int) { return false; }
+  bool SharedMemory::MapAt(off_t, size_t) { return false; }
   SharedMemory::SharedMemory() = default;
   SharedMemory::~SharedMemory() { }
   bool SharedMemory::Create(const SharedMemoryCreateOptions& options) { return false; }
